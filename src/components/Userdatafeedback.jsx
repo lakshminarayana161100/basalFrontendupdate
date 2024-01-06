@@ -1,3 +1,4 @@
+// Importing necessary dependencies and modules from React and external libraries
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -6,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const containerStyle = {
     width: "100%",
     maxWidth: "1000px",
-    margin: "400px 100px 100px",
+    margin: "50px 100px 20px",
     padding: "20px",
     backgroundColor: "#f0f0f0",
     borderRadius: "8px",
@@ -21,8 +22,8 @@ function Userdatalist() {
     const [userForm, setUserForm] = useState([]);
 
     const navigate = useNavigate();
-
-    const deleteStudent = (_id) => {
+// Function to delete a feedback entry
+    const deletefeedback = (_id) => {
         axios
             .delete("http://localhost:8080/feedback/detelefeedback/" + _id)
             .then(() => {
@@ -32,7 +33,7 @@ function Userdatalist() {
                 console.log(error);
             });
     };
-
+ // Function to edit a feedback entry
     const editfeedback = (id) => {
         axios
             .get("http://localhost:8080/feedback/read/" + id)
@@ -44,10 +45,12 @@ function Userdatalist() {
                 console.log(error);
             });
     };
-
+  // Retrieving user information from local storage
     const user = JSON.parse(localStorage.getItem("token"));
     const id = user?._id
     console.log("userid", id)
+
+      // Fetching user-specific feedback data from the server on component mount
     useEffect(() => {
         axios
             .get("http://localhost:8080/feedback/allfeedback/")
@@ -62,11 +65,20 @@ function Userdatalist() {
                 console.log(error);
             });
     }, [userForm]);
+
+     // Rendering the user-specific feedback data in a table
     return (
 
-        <nav style={navbar}>
+        <><nav style={navbar}>
             <h4 style={h1}>Userdata feedback</h4>
-            <div style={containerStyle}>
+            {<Link
+                style={whiteBtnStyle}
+                to={"/CreateFeedback"}
+
+            >
+                Add feeback
+            </Link>}
+        </nav><div style={containerStyle}>
                 <table className="table">
                     <thead>
                         <tr>
@@ -92,7 +104,7 @@ function Userdatalist() {
                                         </button>
                                         <button
                                             className="btn btn-danger btn-sm"
-                                            onClick={() => deleteStudent(user._id)}
+                                            onClick={() => deletefeedback(user._id)}
                                         >
                                             Delete
                                         </button>
@@ -102,8 +114,10 @@ function Userdatalist() {
                         })}
                     </tbody>
                 </table>
-            </div>
-            </nav>
+            </div></>
+          
+
+            
             );
 }
 
@@ -124,3 +138,15 @@ function Userdatalist() {
     fontSize: '25px',
     marginLeft: '20px',
   }
+  const whiteBtnStyle = {
+    border: 'none',
+    outline: 'none',
+    padding: '12px 0',
+    backgroundColor: 'white',
+    borderRadius: '20px',
+    width: '120px',
+    fontWeight: 'bold',
+    fontSize: '20px',
+    cursor: 'pointer',
+    marginRight: '20px',
+  };

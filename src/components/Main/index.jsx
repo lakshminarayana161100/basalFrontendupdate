@@ -17,6 +17,11 @@ const Main = () => {
     <><div className={styles.main_container}>
       <nav className={styles.navbar}>
         <h1>Admin all feedback</h1>
+        
+        <button className={styles.white_btn} onClick={handleLogout}>
+          Logout
+        </button>
+      </nav>
         {/* <div>
           <ul style={{ display: 'flex', gap: '50px', float: "right", marginLeft: "700px" }}>
             <li className="nav-item">
@@ -34,10 +39,6 @@ const Main = () => {
 
 
 
-        <button className={styles.white_btn} onClick={handleLogout}>
-          Logout
-        </button>
-      </nav>
 
       <CreateStudent />
     </div>

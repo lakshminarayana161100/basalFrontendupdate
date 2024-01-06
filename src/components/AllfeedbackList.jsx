@@ -20,6 +20,13 @@ function StudentList() {
 
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    //window.location.reload();
+    navigate("/login");
+
+  };
+
   const deleteStudent = (_id) => {
     axios
       .delete("http://localhost:8080/feedback/detelefeedback/" + _id)
@@ -54,50 +61,87 @@ function StudentList() {
       });
   }, [userForm]);
   return (
-    <div style={containerStyle}>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">customerName id</th>
-            <th scope="col">customerName</th>
-            <th scope="col">Feedback</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userForm.map((user, index) => {
-            return (
-              <tr key={index}>
-                <th scope="row">{user._id}</th>
-                <td>{user.customerName}</td>
-                <td>{user.feedback}</td>
-                <td>
-                  {/* <Link
-                    className="btn btn-primary btn-sm me-2"
-                    // to={"/edit-feedack/" + user._id}
-                    
-                  >
-                    Edit
-                  </Link> */}
-                  <button
-                    className="btn btn-primary btn-sm me-2"
-                    onClick={() => editfeedback(user._id)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => deleteStudent(user._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+    <><div >
+      <nav style={navbar}>
+        <h1>Admin all feedback</h1>
+
+        <button  style={whiteBtnStyle} onClick={handleLogout}>
+          Logout
+        </button>
+      </nav>
     </div>
+    <div style={containerStyle}>
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">customerName id</th>
+              <th scope="col">customerName</th>
+              <th scope="col">Feedback</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userForm.map((user, index) => {
+              return (
+                <tr key={index}>
+                  <th scope="row">{user._id}</th>
+                  <td>{user.customerName}</td>
+                  <td>{user.feedback}</td>
+                  <td>
+                    {/* <Link
+                  className="btn btn-primary btn-sm me-2"
+                  // to={"/edit-feedack/" + user._id}
+                  
+                >
+                  Edit
+                </Link> */}
+                    <button
+                      className="btn btn-primary btn-sm me-2"
+                      onClick={() => editfeedback(user._id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => deleteStudent(user._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div></>
   );
 }
 export default StudentList;
+
+
+const navbar = {
+  width: '100%',
+  height: '70px',
+  backgroundColor: '#3bb19b',
+  display: 'flex',
+  alignItems: ' center',
+  justifyContent: 'space-between',
+}
+
+const h1 = {
+  color: 'white',
+  fontSize: '25px',
+  marginLeft: '20px',
+}
+const whiteBtnStyle = {
+  border: 'none',
+  outline: 'none',
+  padding: '12px 0',
+  backgroundColor: 'white',
+  borderRadius: '20px',
+  width: '120px',
+  fontWeight: 'bold',
+  fontSize: '14px',
+  cursor: 'pointer',
+  marginRight: '20px',
+};

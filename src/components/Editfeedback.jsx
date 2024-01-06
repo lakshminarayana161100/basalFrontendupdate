@@ -38,7 +38,7 @@ function EditStudent() {
 
   const user = JSON.parse(localStorage.getItem("token"));
   const userRole = user?.userType
-
+// Function to handle form submission for updating feedback
   const onUpdate = (e) => {
     e.preventDefault();
     axios
@@ -48,15 +48,15 @@ function EditStudent() {
       })
       .then((res) => {
         console.log({ status: res.status });
-
+ // Navigating based on user role after updating feedback
         if (userRole === "User") {
           navigate("/Userdatafeedback");
         } else {
-          navigate("/");
+          navigate("/Allfeedback-list");
         }
       });
   };
-
+ // Effect to fetch existing feedback data for editing
   useEffect(() => {
     axios
       .get("http://localhost:8080/feedback/read/" + params.id)
@@ -72,6 +72,8 @@ function EditStudent() {
         console.log(error);
       });
   }, [params.id]); // Ensure the effect runs when params.id changes
+
+   // Rendering the feedback edit form and navigation bar
 
   return (
     <nav style={navbar}>

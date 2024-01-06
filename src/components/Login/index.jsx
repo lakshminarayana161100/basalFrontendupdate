@@ -27,7 +27,7 @@ const Login = () => {
 			 if (res.data.userType === "User") {
 				navigate("/CreateFeedback"); 
 			  } else {
-				navigate("/");
+				navigate("/Allfeedback-list");
 			  }
 		} catch (error) {
 			if (
